@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>API keys:</h1>
+
+<div class="APIkeyscontainer">
+
+
+
+    <div class="list-group">
+        {% if empty==True%}
+            <h6>You have no keys. Create one below.</h6>
+        {% endif %}
+
+
+        {% if empty==False%}
+            <h4>Free Keys:</h4>
+            <small>(Click key to copy)</small>
+
+            {% for key in free_keys%}
+                <div class="key-flex">
+                    <a  class="list-group-item list-group-item-action" id="item" onclick="copy_func(this)">{{key}} </a>
+                    <form action="{{ url_for('remove_key', key=key) }}">
+                        <button type="submit" class="button-60" role="button">Remove key</button>
+                    </form>
+                </div>
+            {% endfor %}
+
+            {% if full==False %}
+                <form action="{{ url_for('generate_key', subscription='free') }}">
+                    <button type="submit" class="button-60-1" role="button">Create new key</button>
+                </form>
+            {% endif %}
+
+            {% if full==True%}
+                <div class="greyed-out-section">
+                    <form>
+                        <button type="submit" class="button-60-1 greyed-out" role="button" C>Create new key</button>
+                    </form>
+                </div>
+            {% endif %}
+
+            <br><br>
+
+            <h4>Premium Keys: (charges will apply)</h4>
+                <h7>Data Premium Keys:</h7>
+                <small>(Click key to copy)</small>
+                {% for key in data_premium_keys%}
+                    <div class="key-flex">
+                        <a  class="list-group-item list-group-item-action" id="item" onclick="copy_func(this)">{{key}} </a>
+                        <small class="resources">{{data_premium_keys_consumed[loop.index0]}}/{{bandwidth_limit}}Mb</small>
+                        <form action="{{ url_for('remove_key', key=key) }}">
+                            <button type="submit" class="button-60" role="button">Remove key</button>
+                        </form>
+                    </div>
+                {% endfor %}
+
+
+            {% if full==False %}
+                <form action="{{ url_for('generate_key', subscription='premium-data') }}">
+                    <button type="submit" class="button-60-1" role="button">Create new key</button>
+                </form>
+            {% endif %}
+
+            {% if full==True%}
+                <div class="greyed-out-section">
+                    <form>
+                        <button type="submit" class="button-60-1 greyed-out" role="button" C>Create new key</button>
+                    </form>
+                </div>
+            {% endif %}
+
+            <br>
+
+            <h7>Requests Premium Keys: </h7>
+            <small>(Click key to copy)</small>
+                {% for key in requests_premium_keys%}
+                    <div class="key-flex">
+                        <a  class="list-group-item list-group-item-action" id="item" onclick="copy_func(this)">{{key}} </a>
+                        <small class="resources">{{requests_premium_keys_consumed[loop.index0]}}/{{requests_limit}}request</small>
+                        <form action="{{ url_for('remove_key', key=key) }}">
+                            <button type="submit" class="button-60" role="button">Remove key</button>
+                        </form>
+                    </div>
+                {% endfor %}
+
+
+            {% if full==True%}
+                <div class="greyed-out-section">
+                    <form>
+                        <button type="submit" class="button-60-1 greyed-out" role="button" >Create new key</button>
+                    </form>
+                    <small class="limit-note">(You have reached the maximum number of keys)</small>
+                </div>
+            {% endif %}
+
+            {% if full==False %}
+                <form action="{{ url_for('generate_key', subscription='premium-requests') }}">
+                    <button type="submit" class="button-60-1" role="button">Create new key</button>
+                </form>
+            {% endif %}
+
+        {% endif %}
+
+        {% if empty==True %}
+                <form action="{{ url_for('generate_key', subscription='free') }}">
+                    <button type="submit" class="button-60-1" role="button">Create new key</button>
+                </form>
+            {% endif %}
+    </div>
+
+
+</div>
+<script>function copy_func(element){
+    let key = element.textContent
+    navigator.clipboard.writeText(element.textContent)
+    element.textContent = "copied!"
+    setTimeout(function(){element.textContent = key},1000)
+}</script>
+{% endblock content %}

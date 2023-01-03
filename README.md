@@ -8,9 +8,9 @@
   - Manage Number of requests for API Keys
 
 # Technologies used:
-  -Flask
-  -jwt (Encryption)
-  -Sqlalchemy (ORM)
-  -WTForm
+  - Flask
+  - jwt (Encryption)
+  - Sqlalchemy (ORM)
+  - WTForm
   
   

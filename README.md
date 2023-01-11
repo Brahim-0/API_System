@@ -1,4 +1,4 @@
-# API_System
+# API_System (RESTful API Framework)
 This system can be used to access resources such databases and/or microservices. It is similar to the google's api console. The system is engineered to be easy for reuse.
 
 # API system responsible for:
